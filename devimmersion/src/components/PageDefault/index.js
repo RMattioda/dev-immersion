@@ -10,12 +10,13 @@ const Main = styled.main`
     padding-top: 50px;
     padding-left: 5%;
     padding-right: 5%;
+    position: block;
 `;
 
 function PageDefault({children}){
     return (
         <>
-            <Menu/>
+            <Menu />
                 <Main>
                     {children}
                 </Main>

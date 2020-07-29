@@ -2,7 +2,7 @@ import React from 'react';
 import './Menu.css';
 import Logo from '../../assets/img/Logo.png';
 import Button from '../Button';
-import { LogoImage ,MenuWrapper } from './style';
+import { LogoImage , MenuWrapper } from './style';
 import { Link } from 'react-router-dom';
 
 
