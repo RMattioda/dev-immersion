@@ -1,50 +1,35 @@
+/* eslint-disable camelcase */
 /* eslint-disable linebreak-style */
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PageDefault from '../../../components/PageDefault';
 import FormField from '../../../components/FormField';
 import Button from '../../../components/Button';
+import useForm from '../../../hooks/useForm';
 
 function CadastroCategoria() {
-  const valoresInicias = {
+  const valoresIniciais = {
     nome: '',
     descricao: '',
     cor: '#000',
   };
 
+  const { handleChange, values, clearForm } = useForm(valoresIniciais);
+
   const [categorias, setCategorias] = useState([]);
 
-  const [values, setValues] = useState(valoresInicias);
-
-  function setValue(chave, valor) {
-    setValues({
-      ...values,
-      [chave]: valor,
-    });
-  }
-
   useEffect(() => {
-    if (window.location.href.includes('localhost')) {
-      const URL = 'http://localhost:8080/categorias';
-      fetch(URL)
-        .then(async (respostaDoServer) => {
-          if (respostaDoServer.ok) {
-            const resposta = await respostaDoServer.json();
-            setCategorias(resposta);
-            return;
-          }
-          throw new Error('Não foi possível pegar os dados');
-        });
-    }
+    const URL_TOP = window.location.hostname.includes('localhost')
+      ? 'http://localhost:8080/categorias'
+      : 'https://devsoutinhoflix.herokuapp.com/categorias';
+    fetch(URL_TOP)
+      .then(async (respostaDoServidor) => {
+        const resposta = await respostaDoServidor.json();
+        setCategorias([
+          ...resposta,
+        ]);
+      });
   }, []);
-
-  function handleChange(infosDoCampo) {
-    const { value } = infosDoCampo.target;
-    setValue(
-      infosDoCampo.target.getAttribute('name'),
-      value,
-    );
-  }
 
   return (
     <PageDefault>
@@ -60,7 +45,7 @@ function CadastroCategoria() {
           values,
         ]);
 
-        setValues(valoresInicias);
+        clearForm(valoresIniciais);
       }}
       >
         <div>
@@ -94,15 +79,7 @@ function CadastroCategoria() {
           Cadastrar
         </Button>
       </form>
-
-      <ul>
-        {categorias.map((categoria) => (
-          <li key={`${categoria}`}>
-            {categoria.nome}
-          </li>
-        ))}
-      </ul>
-
+      <br />
       <Link to="/">
         ir para home
       </Link>

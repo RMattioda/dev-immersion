@@ -1,9 +1,10 @@
-import styled from "styled-components"
+import styled from 'styled-components';
 
-//usando styled components ao invés de criar um component 
+// usando styled components ao invés de criar um component
 
 const Button = styled.button`
     border: 1px solid var(--white);
+    background-color: var(--black);
     border-radius: 5px;
     color: var(--white);
     font-size: 16px;
